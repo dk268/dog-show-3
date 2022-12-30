@@ -13,7 +13,7 @@ export const Landing: FunctionComponent = () => {
     if (listBreedsStatus === RequestStatus.Idle) {
       dispatch(getAllBreeds());
     }
-  });
+  }, [dispatch, listBreedsStatus]);
 
-  return <div>{(allBreeds ?? "").toString()}</div>;
+  return <div>{JSON.stringify(allBreeds)}</div>;
 };
