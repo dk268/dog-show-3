@@ -1,3 +1,5 @@
+import { DogBreed, DogSubBreed } from "~constants/constantsTypes";
+
 export const isDevEnv = () => process.env.NODE_ENV !== "production";
 
 class RequestError extends Error {
@@ -73,4 +75,41 @@ export const batchRequest = async <T>(requests: Array<BatchedRequest>): Promise<
     const unexpectedError = e as string;
     throw new Error(unexpectedError);
   }
+};
+
+const multiwordDictionary: Partial<{ [k in `${DogBreed | DogSubBreed}`]: string }> = {
+  bullterrier: "Bull Terrier",
+  cattledog: "Cattle Dog",
+  cotondetulear: "Coton de Tulear",
+  germanshepherd: "German Shepherd",
+  mexicanhairless: "Mexican Hairless",
+  shihtzu: "Shih Tzu",
+  stbernard: "St. Bernard",
+  flatcoated: "Flat-coated",
+  germanlonghair: "German Longhair",
+  kerryblue: "Kerry Blue",
+  westhighland: "West Highland",
+}; // TODO: Make this checked against a reputable source
+
+export const dogCapitalize = (input: DogBreed | DogSubBreed): string => {
+  const doggy = multiwordDictionary[input] ?? null;
+
+  return doggy ?? capitalize(input);
+};
+
+export const capitalize = (input: string): string => {
+  return input
+    .split(" ")
+    .map((str) => str[0].toUpperCase() + str.slice(1).toLowerCase())
+    .join(" ");
+};
+
+export const getSubBreedValueRender = (
+  breed: DogBreed | "",
+  subBreeds: DogSubBreed[],
+  subBreed: DogSubBreed | ""
+): string => {
+  if (breed && !subBreeds.length) return "Breed has no sub-breeds";
+  if (!breed) return "";
+  return subBreed;
 };

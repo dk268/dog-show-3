@@ -7,6 +7,7 @@ import { AllBreed } from "./dogsModels";
 export const getAllBreeds = createAsyncThunk<AllBreed>(
   `${DOGS_SLICE_TYPE}/breeds/list`,
   async () => {
-    return await request(makeGetAllBreeds());
+    const response = await request<{ message: AllBreed; status: string }>(makeGetAllBreeds());
+    return response.message;
   }
 );
