@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BreedWithSubBreed } from "~constants/constantsTypes";
 import { DOGS_SLICE_TYPE } from "~constants/dogsConstants";
 import { makeGetAllBreeds, makeGetNumberByBreed, makeGetNumberBySubBreed } from "~urls/urls";
-import { batchRequest, request } from "~utils/utils";
+import { batchRequest, request, shuffle } from "~utils/utils";
 import { AllBreed, FetchPicsResponse, ValidDogSelection } from "./dogsModels";
 
 export const getAllBreeds = createAsyncThunk<AllBreed>(
@@ -30,6 +30,6 @@ export const getRequestedPics = createAsyncThunk<string[], ValidDogSelection[]>(
 
     const responses = await batchRequest<FetchPicsResponse[]>(requests);
 
-    return responses.flatMap(({ message }) => message);
+    return shuffle(responses.flatMap(({ message }) => message));
   }
 );

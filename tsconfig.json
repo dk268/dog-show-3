@@ -18,6 +18,7 @@
     "baseUrl": ".",
     "paths": {
       "~constants/*": ["src/constants/*"],
+      "~hoc/*": ["src/hoc/*"],
       "~hooks/*": ["src/hooks/*"],
       "~modules/*": ["src/modules/*"],
       "~pages/*": ["src/pages/*"],

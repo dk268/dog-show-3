@@ -61,6 +61,12 @@ const dogsSlice = createSlice({
         });
       }
     },
+    clearForm: (state) => {
+      state.dogSelections = [state.dogSelections[0].reset()];
+      // simply returning initial state causes a render blip because it's making a new first element
+      // TODO: refactor initialState to prevent this
+      // TODO: remove class implementation for doggy selections
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -92,6 +98,7 @@ export const {
   chooseDogBreed,
   chooseDogSubBreed,
   chooseDogCount,
+  clearForm,
   removeDogSelection,
 } = dogsSlice.actions;
 

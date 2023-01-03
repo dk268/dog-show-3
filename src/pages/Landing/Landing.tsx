@@ -13,12 +13,17 @@ import {
   selectDogSelections,
   getRequestedPics,
   ValidDogSelection,
+  clearForm,
 } from "~stores/dogs";
+import { DogModal } from "~modules/DogModal";
+import { withBorder } from "~hoc/index";
 
-export const Landing: FunctionComponent = () => {
+const DogLanding: FunctionComponent = () => {
   const dispatch = useAppDispatch();
 
   const [inError, setInError] = useState(false);
+
+  const [open, setOpen] = useState(false);
 
   const dogSelections = useAppSelector(selectDogSelections);
 
@@ -38,10 +43,13 @@ export const Landing: FunctionComponent = () => {
     However, here, I do want the error state to clear on any change to the selections.
   */
 
+  const onClose = () => {
+    setOpen(false);
+  };
+
   const handleClick = () => {
-    console.log(dogSelections);
     const validRows = dogSelections.filter(({ breed, count }) => {
-      return breed || count;
+      return breed && count;
     }) as ValidDogSelection[];
 
     if (!validRows.length) {
@@ -50,13 +58,20 @@ export const Landing: FunctionComponent = () => {
       // TODO: enhance error handling to identify which rows are in error
     }
 
+    setOpen(true);
+
     dispatch(getRequestedPics(validRows));
   };
 
-  const pl4: SxProps = { pl: 4 };
+  const handleReset = () => {
+    dispatch(clearForm());
+  };
+
+  const pl2: SxProps = { pl: 2 };
+  const ml2: SxProps = { ml: 2 };
 
   const errorElement = inError ? (
-    <Typography variant="caption" color="red">
+    <Typography variant="caption" color="red" sx={pl2}>
       Please make at least one valid doggy request!
     </Typography>
   ) : null;
@@ -64,12 +79,18 @@ export const Landing: FunctionComponent = () => {
   return (
     <Container>
       <DogForm />
-      <Box sx={pl4}>
+      <Box>
         <Button onClick={handleClick} variant="contained">
           Fetch
         </Button>
         {errorElement}
+        <Button sx={ml2} onClick={handleReset} variant="outlined">
+          Reset
+        </Button>
       </Box>
+      <DogModal open={open} onClose={onClose} />
     </Container>
   );
 };
+
+export const Landing = withBorder()(DogLanding);

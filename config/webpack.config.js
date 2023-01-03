@@ -305,6 +305,7 @@ module.exports = function (webpackEnv) {
           "scheduler/tracing": "scheduler/tracing-profiling",
         }),
         "~constants": path.resolve(__dirname, "../src/constants/"),
+        "~hoc": path.resolve(__dirname, "../src/hoc/"),
         "~hooks": path.resolve(__dirname, "../src/hooks/"),
         "~modules": path.resolve(__dirname, "../src/modules/"),
         "~pages": path.resolve(__dirname, "../src/pages/"),

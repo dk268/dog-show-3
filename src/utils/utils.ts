@@ -107,12 +107,22 @@ export const capitalize = (input: string): string => {
 
 export const getSubBreedValueRender = (
   breed: DogBreed | "",
-  subBreeds: DogSubBreed[],
   subBreed: DogSubBreed | ""
 ): string => {
   if (!breed || !subBreed) return "";
   return dogCapitalize(subBreed);
 };
+
+export const shuffle = <T>(arr: T[]): T[] => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+
+  return arr;
+}; // from Fisher-Yates
 
 export class DogSelection {
   breed: DogRowMeta["breed"];
@@ -132,6 +142,14 @@ export class DogSelection {
     this.count = count;
     this.id = ++DogSelection.nextId;
   }
+
+  reset = () => {
+    this.breed = "";
+    this.subBreed = "";
+    this.count = 1;
+
+    return this;
+  };
 
   setBreed = (breed: DogRowMeta["breed"]): DogSelection => {
     if (breed !== this.breed) {

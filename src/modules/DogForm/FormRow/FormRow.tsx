@@ -55,7 +55,7 @@ export const FormRow: FunctionComponent<FormRowProps> = (props) => {
 
   const outerDirection = isDesktop ? "row" : "column";
 
-  const renderSubBreed = getSubBreedValueRender.bind(null, breed, subBreeds);
+  const renderSubBreed = getSubBreedValueRender.bind(null, breed);
 
   const goDogsGo = "Go Dogs Go";
   const subBreedSelect = (
