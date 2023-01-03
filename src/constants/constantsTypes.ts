@@ -300,3 +300,5 @@ export type SubBreedByBreed = {
   waterdog: WaterdogSubBreed;
   wolfhound: WolfhoundSubBreed;
 };
+
+export type SubBreedOfBreed = SubBreedByBreed[`${BreedWithSubBreed}`];

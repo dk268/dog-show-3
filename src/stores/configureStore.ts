@@ -10,7 +10,8 @@ const logger = createLogger({
 });
 
 export const store = configureStore({
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([logger]),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat([logger]),
   reducer: {
     [DOGS_SLICE_TYPE]: dogsReducer,
   },

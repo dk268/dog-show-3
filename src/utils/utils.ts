@@ -1,4 +1,5 @@
 import { DogBreed, DogSubBreed } from "~constants/constantsTypes";
+import { DogRowMeta } from "~stores/dogs";
 
 export const isDevEnv = () => process.env.NODE_ENV !== "production";
 
@@ -109,7 +110,44 @@ export const getSubBreedValueRender = (
   subBreeds: DogSubBreed[],
   subBreed: DogSubBreed | ""
 ): string => {
-  if (breed && !subBreeds.length) return "Breed has no sub-breeds";
-  if (!breed) return "";
-  return subBreed;
+  if (!breed || !subBreed) return "";
+  return dogCapitalize(subBreed);
 };
+
+export class DogSelection {
+  breed: DogRowMeta["breed"];
+  subBreed: DogRowMeta["subBreed"];
+  count: DogRowMeta["count"];
+  readonly id: number;
+
+  static nextId = 0;
+
+  constructor(
+    breed: DogRowMeta["breed"] = "",
+    subBreed: DogRowMeta["subBreed"] = "",
+    count: DogRowMeta["count"] = 1
+  ) {
+    this.breed = breed;
+    this.subBreed = subBreed;
+    this.count = count;
+    this.id = ++DogSelection.nextId;
+  }
+
+  setBreed = (breed: DogRowMeta["breed"]): DogSelection => {
+    if (breed !== this.breed) {
+      this.breed = breed;
+      this.subBreed = ""; // reset sub-breed if different breed
+    }
+    return this;
+  };
+
+  setSubBreed = (subBreed: DogRowMeta["subBreed"]): DogSelection => {
+    this.subBreed = subBreed;
+    return this;
+  };
+
+  setCount = (count: DogRowMeta["count"]): DogSelection => {
+    this.count = count;
+    return this;
+  };
+}

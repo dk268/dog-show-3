@@ -9,3 +9,10 @@ export const selectListBreedsStatus = createSelector(
   selectDogsState,
   ({ listBreedsStatus }) => listBreedsStatus
 );
+
+export const selectDogSelections = createSelector(
+  selectDogsState,
+  ({ dogSelections }) => dogSelections
+);
+
+export const selectPicUrls = createSelector(selectDogsState, ({ picUrls }) => picUrls);
